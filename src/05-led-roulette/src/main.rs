@@ -4,12 +4,21 @@
 
 extern crate pg;
 
+use core::iter;
+use pg::delay;
+use pg::led::LEDS;
+
 #[inline(never)]
 #[no_mangle]
 pub fn main() -> ! {
-    let y;
-    let x = 42;
-    y = x;
 
-    loop {}
+    loop {
+        for (current, next) in LEDS.iter()
+            .zip(LEDS.iter().skip(1).chain(iter::once(&LEDS[0]))) {
+            next.on();
+            delay::ms(50);
+            current.off();
+            delay::ms(50);
+        }
+    }
 }

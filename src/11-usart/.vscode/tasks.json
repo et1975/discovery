@@ -1,0 +1,24 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "type": "shell",
+            "command": "xargo build --target thumbv7em-none-eabihf && mkdir tmp",
+            "problemMatcher": []
+        },
+        {
+            "label": "itmdump",
+            "type": "shell",
+            "command": "itmdump ./tmp/itm.log",
+            "isBackground": true,
+            "problemMatcher": []
+        }
+    ]
+}

@@ -2,4 +2,7 @@
 /template
 Cargo.lock
 book/
+.DS_Store
+.idea
+tmp/
 target/

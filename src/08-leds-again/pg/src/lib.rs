@@ -16,4 +16,5 @@ pub mod peripheral {
 #[export_name = "_init"]
 pub unsafe fn init() {
     f3::itm::init();
+    f3::led::init();
 }

@@ -6,22 +6,18 @@ extern crate pg;
 #[inline(never)]
 #[no_mangle]
 pub fn main() -> ! {
-    unsafe {
-        // A magic address!
-        const GPIOE_BSRR: u32 = 0x48001018;
+    use pg::peripheral;
 
-        // Turn on the "North" LED (red)
-        *(GPIOE_BSRR as *mut u32) = 1 << 9;
+    // Get mutable access to the GPIOE register block
+    // `unsafe` because this functions hands over (aliases) `&mut-` references
+    let gpioe = unsafe { peripheral::gpioe_mut() };
 
-        // Turn on the "East" LED (green)
-        *(GPIOE_BSRR as *mut u32) = 1 << 11;
+    // Turn on the North LED
+    gpioe.bsrr.write(|w| w.bs9(true));
 
-        // Turn off the "North" LED
-        *(GPIOE_BSRR as *mut u32) = 1 << (9 + 16);
+    // Turn on the East LED
+    gpioe.bsrr.write(|w| w.bs11(true));
 
-        // Turn off the "East" LED
-        *(GPIOE_BSRR as *mut u32) = 1 << (11 + 16);
-    }
 
     loop {}
 }
